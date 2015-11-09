@@ -1,0 +1,11 @@
+{
+    "name": "fram/deathbycaptcha",
+    "description": "DeathByCaptcha extension",
+    "authors": [
+        {
+            "name": "Phu Hoang",
+            "email": "hmp@framco.se"
+        }
+    ],
+    "require": {}
+}
