@@ -3,7 +3,7 @@
  * @Author: Phu Hoang
  * @Date:   2015-11-09 16:09:25
  * @Last Modified by:   Phu Hoang
- * @Last Modified time: 2015-11-09 16:13:18
+ * @Last Modified time: 2015-11-09 18:08:18
  */
 
 namespace hmphu\deathbycaptcha;
@@ -187,7 +187,7 @@ class DeathByCaptchaSocketClient extends DeathByCaptchaClient
             } else {
                 return $response;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->close();
             throw $e;
         }

@@ -3,7 +3,7 @@
  * @Author: Phu Hoang
  * @Date:   2015-11-09 16:09:25
  * @Last Modified by:   Phu Hoang
- * @Last Modified time: 2015-11-09 16:13:11
+ * @Last Modified time: 2015-11-09 18:08:05
  */
 
 namespace hmphu\deathbycaptcha;
@@ -193,7 +193,7 @@ class DeathByCaptchaHttpClient extends DeathByCaptchaClient
                 $captcha = $this->_call('captcha', array(
                     'captchafile' => '@'. $tmp_fn,
                 ));
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 @unlink($tmp_fn);
                 throw $e;
             }
