@@ -1,10 +1,11 @@
 <?php
 /**
  * @Author: Phu Hoang
- * @Date:   2015-11-09 15:49:03
+ * @Date:   2015-11-09 16:09:25
  * @Last Modified by:   Phu Hoang
- * @Last Modified time: 2015-11-09 15:58:49
+ * @Last Modified time: 2015-11-09 16:12:35
  */
+
 namespace hmphu\deathbycaptcha;
 
 /**
@@ -13,5 +14,5 @@ namespace hmphu\deathbycaptcha;
  * @package DBCAPI
  * @subpackage PHP
  */
-class ServerException extends Exception
+class DeathByCaptchaServerException extends DeathByCaptchaException
 {}

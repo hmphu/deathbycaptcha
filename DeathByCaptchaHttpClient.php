@@ -1,20 +1,21 @@
 <?php
 /**
  * @Author: Phu Hoang
- * @Date:   2015-11-09 15:49:03
+ * @Date:   2015-11-09 16:09:25
  * @Last Modified by:   Phu Hoang
- * @Last Modified time: 2015-11-09 15:58:49
+ * @Last Modified time: 2015-11-09 16:13:11
  */
+
 namespace hmphu\deathbycaptcha;
 
 /**
  * Death by Captcha HTTP API Client
  *
- * @see Client
+ * @see DeathByCaptchaClient
  * @package DBCAPI
  * @subpackage PHP
  */
-class HttpClient extends Client
+class DeathByCaptchaHttpClient extends DeathByCaptchaClient
 {
     const BASE_URL = 'http://api.dbcapi.me/api';
 
@@ -35,7 +36,7 @@ class HttpClient extends Client
             }
 
             if (!($this->_conn = curl_init())) {
-                throw new RuntimeException(
+                throw new DeathByCaptchaRuntimeException(
                     'Failed initializing a CURL connection'
                 );
             }
@@ -64,10 +65,10 @@ class HttpClient extends Client
      * @param string $cmd     API command
      * @param array  $payload API call payload, essentially HTTP POST fields
      * @return array|null API response hash table on success
-     * @throws IOException On network related errors
-     * @throws AccessDeniedException On failed login attempt
-     * @throws InvalidCaptchaException On invalid CAPTCHAs rejected by the service
-     * @throws ServerException On API server errors
+     * @throws DeathByCaptchaIOException On network related errors
+     * @throws DeathByCaptchaAccessDeniedException On failed login attempt
+     * @throws DeathByCaptchaInvalidCaptchaException On invalid CAPTCHAs rejected by the service
+     * @throws DeathByCaptchaServerException On API server errors
      */
     protected function _call($cmd, $payload=null)
     {
@@ -98,7 +99,7 @@ class HttpClient extends Client
 
         $response = curl_exec($this->_conn);
         if (0 < ($err = curl_errno($this->_conn))) {
-            throw new IOException(
+            throw new DeathByCaptchaIOException(
                 "API connection failed: [{$err}] " . curl_error($this->_conn)
             );
         }
@@ -109,19 +110,19 @@ class HttpClient extends Client
 
         $status_code = curl_getinfo($this->_conn, CURLINFO_HTTP_CODE);
         if (403 == $status_code) {
-            throw new AccessDeniedException(
+            throw new DeathByCaptchaAccessDeniedException(
                 'Access denied, check your credentials and/or balance'
             );
         } else if (400 == $status_code || 413 == $status_code) {
-            throw new InvalidCaptchaException(
+            throw new DeathByCaptchaInvalidCaptchaException(
                 "CAPTCHA was rejected by the service, check if it's a valid image"
             );
         } else if (503 == $status_code) {
-            throw new ServiceOverloadException(
+            throw new DeathByCaptchaServiceOverloadException(
                 "CAPTCHA was rejected due to service overload, try again later"
             );
         } else if (!($response = call_user_func($this->_response_parser, $response))) {
-            throw new ServerException(
+            throw new DeathByCaptchaServerException(
                 'Invalid API response'
             );
         } else {
@@ -131,12 +132,12 @@ class HttpClient extends Client
 
 
     /**
-     * @see Client::__construct()
+     * @see DeathByCaptchaClient::__construct()
      */
     public function __construct($username, $password)
     {
         if (!extension_loaded('curl')) {
-            throw new RuntimeException(
+            throw new DeathByCaptchaRuntimeException(
                 'CURL extension not found'
             );
         }
@@ -151,7 +152,7 @@ class HttpClient extends Client
     }
 
     /**
-     * @see Client::close()
+     * @see DeathByCaptchaClient::close()
      */
     public function close()
     {
@@ -166,7 +167,7 @@ class HttpClient extends Client
     }
 
     /**
-     * @see Client::get_user()
+     * @see DeathByCaptchaClient::get_user()
      */
     public function get_user()
     {
@@ -179,8 +180,8 @@ class HttpClient extends Client
     }
 
     /**
-     * @see Client::upload()
-     * @throws RuntimeException When failed to save CAPTCHA image to a temporary file
+     * @see DeathByCaptchaClient::upload()
+     * @throws DeathByCaptchaRuntimeException When failed to save CAPTCHA image to a temporary file
      */
     public function upload($captcha)
     {
@@ -209,7 +210,7 @@ class HttpClient extends Client
     }
 
     /**
-     * @see Client::get_captcha()
+     * @see DeathByCaptchaClient::get_captcha()
      */
     public function get_captcha($cid)
     {
@@ -222,7 +223,7 @@ class HttpClient extends Client
     }
 
     /**
-     * @see Client::report()
+     * @see DeathByCaptchaClient::report()
      */
     public function report($cid)
     {

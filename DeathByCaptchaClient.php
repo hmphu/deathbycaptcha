@@ -1,10 +1,11 @@
 <?php
 /**
  * @Author: Phu Hoang
- * @Date:   2015-11-09 15:49:03
+ * @Date:   2015-11-09 16:09:25
  * @Last Modified by:   Phu Hoang
- * @Last Modified time: 2015-11-09 15:58:49
+ * @Last Modified time: 2015-11-09 16:13:04
  */
+
 namespace hmphu\deathbycaptcha;
 
 /**
@@ -16,7 +17,7 @@ namespace hmphu\deathbycaptcha;
  * @package DBCAPI
  * @subpackage PHP
  */
-abstract class Client
+abstract class DeathByCaptchaClient
 {
     const API_VERSION = 'DBC/PHP v4.1.1';
 
@@ -69,12 +70,12 @@ abstract class Client
      * Checks if CAPTCHA is valid (not empty)
      *
      * @param string $img Raw CAPTCHA image
-     * @throws InvalidCaptchaException On invalid CAPTCHA images
+     * @throws DeathByCaptchaInvalidCaptchaException On invalid CAPTCHA images
      */
     protected function _is_valid_captcha($img)
     {
         if (0 == strlen($img)) {
-            throw new InvalidCaptchaException(
+            throw new DeathByCaptchaInvalidCaptchaException(
                 'CAPTCHA image file is empty'
             );
         } else {
@@ -104,7 +105,7 @@ abstract class Client
     /**
      * Closes opened connection (if any), as gracefully as possible
      *
-     * @return Client
+     * @return DeathByCaptchaClient
      */
     abstract public function close();
 
@@ -118,7 +119,7 @@ abstract class Client
     /**
      * Returns user's balance (in US cents)
      *
-     * @uses Client::get_user()
+     * @uses DeathByCaptchaClient::get_user()
      * @return float|null
      */
     public function get_balance()
@@ -137,7 +138,7 @@ abstract class Client
     /**
      * Returns CAPTCHA text
      *
-     * @uses Client::get_captcha()
+     * @uses DeathByCaptchaClient::get_captcha()
      * @param int $cid CAPTCHA ID
      * @return string|null
      */
@@ -159,17 +160,17 @@ abstract class Client
      *
      * @param string|array|resource $captcha CAPTCHA image file name, vector of bytes, or file handle
      * @return array|null Uploaded CAPTCHA details on success
-     * @throws InvalidCaptchaException On invalid CAPTCHA file
+     * @throws DeathByCaptchaInvalidCaptchaException On invalid CAPTCHA file
      */
     abstract public function upload($captcha);
 
     /**
      * Tries to solve CAPTCHA by uploading it and polling for its status/text
-     * with arbitrary timeout. See {@link Client::upload()} for
+     * with arbitrary timeout. See {@link DeathByCaptchaClient::upload()} for
      * $captcha param details.
      *
-     * @uses Client::upload()
-     * @uses Client::get_captcha()
+     * @uses DeathByCaptchaClient::upload()
+     * @uses DeathByCaptchaClient::get_captcha()
      * @param int $timeout Optional solving timeout (in seconds)
      * @return array|null CAPTCHA details hash on success
      */
@@ -191,14 +192,14 @@ abstract class Client
     /**
      * @param string $username DBC account username
      * @param string $password DBC account password
-     * @throws RuntimeException On missing/empty DBC account credentials
-     * @throws RuntimeException When required extensions/functions not found
+     * @throws DeathByCaptchaRuntimeException On missing/empty DBC account credentials
+     * @throws DeathByCaptchaRuntimeException When required extensions/functions not found
      */
     public function __construct($username, $password)
     {
         foreach (array('username', 'password') as $k) {
             if (!$$k) {
-                throw new RuntimeException(
+                throw new DeathByCaptchaRuntimeException(
                     "Account {$k} is missing or empty"
                 );
             }
