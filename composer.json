@@ -2,7 +2,7 @@
     "name": "hmphu/deathbycaptcha",
     "description": "DeathByCaptcha extension",
     "type": "library",
-    "keywords": [""],
+    "keywords": ["DeathByCaptcha"],
     "license": "Apache-2.0",
      "authors": [
         {
