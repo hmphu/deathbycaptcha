@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Deathbycaptcha by hmphu</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Deathbycaptcha</h1>
+        <p>Unofficial PHP wrapper for DeathByCaptcha API</p>
+
+        <p class="view"><a href="https://github.com/hmphu/deathbycaptcha">View the Project on GitHub <small>hmphu/deathbycaptcha</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/hmphu/deathbycaptcha/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/hmphu/deathbycaptcha/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/hmphu/deathbycaptcha">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="deathbycaptcha-php-wrapper" class="anchor" href="#deathbycaptcha-php-wrapper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DeathByCaptcha PHP Wrapper</h1>
+
+<p>Unofficial PHP wrapper for <a href="http://www.deathbycaptcha.com/user/api">DeathByCaptcha API</a></p>
+
+<h2>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use it</h2>
+
+<pre><code>use hmphu\deathbycaptcha\DeathByCaptchaSocketClient;
+use hmphu\deathbycaptcha\DeathByCaptchaClient;
+
+$deathByCaptchaUser = 'Your DBC API Username Here';
+$deathByCaptchaPassword = 'Your DBC API Password Here';
+$client = new DeathByCaptchaSocketClient($deathByCaptchaUser, $deathByCaptchaPassword);
+
+try {
+    $balance = $client-&gt;get_balance();
+    if($balance &gt; 0){
+        /* Put your CAPTCHA file name or opened file handler, and optional solving timeout (in seconds) here: */
+        $captcha = $client-&gt;decode($img, DeathByCaptchaClient::DEFAULT_TIMEOUT * 2);
+        if ($captcha) {
+            $text = $captcha['text'];
+        }
+    }
+} catch (DeathByCaptchaAccessDeniedException $e) {
+    /* Access to DBC API denied, check your credentials and/or balance */
+}
+</code></pre>
+
+<h2>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h2>
+
+<p>Make with love to DeathByCaptcha service</p>
+
+<p>In 2016, PhuHM (<a href="https://github.com/hmphu">@hmphu</a>), <a href="http://www.hnphu.com">http://hmphu.com</a></p>
+
+<h2>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h2>
+
+<p>Having trouble? <a href="mailto:me@hmphu.com">contact me</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/hmphu">hmphu</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-72252727-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
