@@ -2,7 +2,25 @@
 
 Unofficial PHP wrapper for [DeathByCaptcha API](http://www.deathbycaptcha.com/user/api)
 
-## How to use it
+## Installation
+
+The preferred way to install this extension is through composer.
+
+Either run
+
+```
+php composer.phar require --prefer-dist hmphu/deathbycaptcha
+```
+
+or add
+
+```
+"hmphu/deathbycaptcha": "*"
+```
+
+to the require section of your composer.json.
+
+## Usage
 
 ```
 use hmphu\deathbycaptcha\DeathByCaptchaSocketClient;
