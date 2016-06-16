@@ -3,7 +3,7 @@
     "description": "DeathByCaptcha extension",
     "type": "library",
     "keywords": ["DeathByCaptcha"],
-    "license": "Apache-2.0",
+    "license": "MIT",
      "authors": [
         {
             "name": "Phu Hoang",
